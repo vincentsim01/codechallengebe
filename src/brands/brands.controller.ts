@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { BrandsService } from './brands.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
@@ -13,13 +13,16 @@ export class BrandsController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('subCategoryId') subCategoryId?: string) {
+    if (subCategoryId) {
+      return this.brandsService.findBySubcategory(subCategoryId);
+    }
     return this.brandsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandsService.findOne(id);
+  @Get(':subCategoryId')
+  findOne(@Param('subCategoryId') subCategoryId: string) {
+    return this.brandsService.findOne(subCategoryId);
   }
 
   @Patch(':id')

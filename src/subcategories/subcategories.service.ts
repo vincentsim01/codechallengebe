@@ -26,10 +26,16 @@ export class SubcategoriesService {
     return this.data.subcategories;
   }
 
-  findOne(id: string) {
-    const subcategory = this.data.subcategories.find(s => s.id === id);
+  findByCategory(categoryId: string) {
+    return this.data.subcategories.filter(
+      s => s.categoryId === categoryId
+    );
+  }
+
+  findOne(categoryId: string) {
+    const subcategory = this.data.subcategories.find(s => s.categoryId === categoryId);
     if (!subcategory) {
-      throw new NotFoundException(`Subcategory ${id} not found`);
+      throw new NotFoundException(`Subcategory for category ${categoryId} not found`);
     }
     return subcategory;
   }
@@ -37,7 +43,7 @@ export class SubcategoriesService {
   update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
     const index = this.data.subcategories.findIndex(c => c.id === id);
     if (index === -1) {
-      throw new NotFoundException(`Category ${id} not found`);
+      throw new NotFoundException(`Subcategory ${id} not found`);
     }
 
     this.data.subcategories[index] = {

@@ -29,10 +29,16 @@ export class BrandsService {
     return this.data.brands;
   }
 
-  findOne(id: string) {
-    const brand = this.data.brands.find(c => c.id === id);
+  findBySubcategory(subCategoryId: string) {
+    return this.data.brands.filter(
+      s => s.subCategoryId === subCategoryId
+    );
+  }
+
+  findOne(subCategoryId: string) {
+    const brand = this.data.brands.find(c => c.subCategoryId === subCategoryId);
     if(!brand){
-      throw new NotFoundException(`Brand ${id} not found`);
+      throw new NotFoundException(`Brand for subcategory ${subCategoryId} not found`);
     }
     return brand;
   }

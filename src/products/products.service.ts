@@ -5,7 +5,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 @Injectable()
 export class ProductsService {
   private data = {
-    products : [
+    "products":[
       { "id": "P1", "brandId": "B1", "name": "Asus ROG Zephyrus", "price": 25000000 },
       { "id": "P2", "brandId": "B2", "name": "MacBook Pro M3", "price": 30000000 },
       { "id": "P3", "brandId": "B3", "name": "Samsung Galaxy S24", "price": 15000000 },
@@ -29,10 +29,16 @@ export class ProductsService {
     return this.data.products;
   }
 
-  findOne(id: string) {
-    const product = this.data.products.find(c => c.id === id);
+  findProducts(brandId: string) {
+    return this.data.products.filter(
+      s => s.brandId === brandId
+    );
+  }
+
+  findOne(brandId: string) {
+    const product = this.data.products.find(c => c.brandId === brandId);
     if (!product) {
-      throw new Error(`Product with id ${id} not found`);
+      throw new Error(`Product for brand ${brandId} not found`);
     }
     return product;
   }

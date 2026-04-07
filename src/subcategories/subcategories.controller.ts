@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { SubcategoriesService } from './subcategories.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
@@ -12,15 +12,23 @@ export class SubcategoriesController {
     return this.subcategoriesService.create(createSubcategoryDto);
   }
 
+  // @Get()
+  // findAll() {
+  //   return this.subcategoriesService.findAll();
+  // }
+
   @Get()
-  findAll() {
+  findAll(@Query('categoryId') categoryId?: string) {
+    if (categoryId) {
+      return this.subcategoriesService.findByCategory(categoryId);
+    }
     return this.subcategoriesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subcategoriesService.findOne(id);
-  }
+  // @Get(':categoryId')
+  // findOne(@Param('categoryId') categoryId: string) {
+  //   return this.subcategoriesService.findOne(categoryId);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSubcategoryDto: UpdateSubcategoryDto) {
